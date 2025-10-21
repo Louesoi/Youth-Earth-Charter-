@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sua carta</title>
+  <title>Your Card</title>
   <style>
     body {
-      background: #111;
-      color: #fff;
+      background: #fff; /* fundo branco */
+      color: #000;      /* texto preto */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -20,12 +20,12 @@
       max-width: 90vw;
       max-height: 80vh;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
     button {
       margin-top: 1rem;
-      background: #fff;
-      color: #000;
+      background: #000;
+      color: #fff;
       border: none;
       padding: 0.5rem 1rem;
       border-radius: 8px;
@@ -35,9 +35,9 @@
   </style>
 </head>
 <body>
-  <h2>Sua carta é:</h2>
-  <img id="carta" alt="Carta aleatória" />
-  <button onclick="window.location.reload()">Ver outra (teste)</button>
+  <h2>Your card is:</h2>
+  <img id="carta" alt="Random card" />
+  <button onclick="window.location.reload()">See another (test)</button>
 
   <script>
     // URLs diretas das cartas no Imgur
