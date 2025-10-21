@@ -40,30 +40,30 @@
   <button onclick="window.location.reload()">Ver outra (teste)</button>
 
   <script>
-    // 👉 coloque aqui as URLs das suas cartas (imagens)
+    // URLs diretas das cartas no Imgur
     const cartas = [
-      "https://exemplo.com/cartas/carta1.jpg",
-      "https://exemplo.com/cartas/carta2.jpg",
-      "https://exemplo.com/cartas/carta3.jpg",
-      "https://exemplo.com/cartas/carta4.jpg",
-      "https://exemplo.com/cartas/carta5.jpg",
-      "https://exemplo.com/cartas/carta6.jpg",
-      "https://exemplo.com/cartas/carta7.jpg",
-      "https://exemplo.com/cartas/carta8.jpg",
-      "https://exemplo.com/cartas/carta9.jpg",
-      "https://exemplo.com/cartas/carta10.jpg",
-      "https://exemplo.com/cartas/carta11.jpg",
-      "https://exemplo.com/cartas/carta12.jpg",
-      "https://exemplo.com/cartas/carta13.jpg",
-      "https://exemplo.com/cartas/carta14.jpg",
-      "https://exemplo.com/cartas/carta15.jpg",
-      "https://exemplo.com/cartas/carta16.jpg"
+      "https://i.imgur.com/i9CdVGM.png",
+      "https://i.imgur.com/AuwpAuB.png",
+      "https://i.imgur.com/2ss9UxY.png",
+      "https://i.imgur.com/gYZPbbX.png",
+      "https://i.imgur.com/kFBMtdV.png",
+      "https://i.imgur.com/iDq2g6K.png",
+      "https://i.imgur.com/pVINTL1.png",
+      "https://i.imgur.com/ipavp10.png",
+      "https://i.imgur.com/wmdqo1P.png",
+      "https://i.imgur.com/aZDwcOu.png",
+      "https://i.imgur.com/kpBO8MB.png",
+      "https://i.imgur.com/i2Cn22H.png",
+      "https://i.imgur.com/mEXh5DJ.png",
+      "https://i.imgur.com/zZa5RcU.png",
+      "https://i.imgur.com/Qt7l0Gd.png",
+      "https://i.imgur.com/Ia0KqxG.png"
     ];
 
-    // sorteia uma aleatória
+    // Sorteia uma carta aleatória
     const carta = cartas[Math.floor(Math.random() * cartas.length)];
 
-    // evita cache (pra cada pessoa ver diferente)
+    // Define a imagem e evita cache
     const img = document.getElementById("carta");
     img.src = `${carta}?t=${Date.now()}`;
   </script>
