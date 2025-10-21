@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sua carta</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+      flex-direction: column;
+    }
+    img {
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+    button {
+      margin-top: 1rem;
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Sua carta é:</h2>
+  <img id="carta" alt="Carta aleatória" />
+  <button onclick="window.location.reload()">Ver outra (teste)</button>
+
+  <script>
+    // 👉 coloque aqui as URLs das suas cartas (imagens)
+    const cartas = [
+      "https://exemplo.com/cartas/carta1.jpg",
+      "https://exemplo.com/cartas/carta2.jpg",
+      "https://exemplo.com/cartas/carta3.jpg",
+      "https://exemplo.com/cartas/carta4.jpg",
+      "https://exemplo.com/cartas/carta5.jpg",
+      "https://exemplo.com/cartas/carta6.jpg",
+      "https://exemplo.com/cartas/carta7.jpg",
+      "https://exemplo.com/cartas/carta8.jpg",
+      "https://exemplo.com/cartas/carta9.jpg",
+      "https://exemplo.com/cartas/carta10.jpg",
+      "https://exemplo.com/cartas/carta11.jpg",
+      "https://exemplo.com/cartas/carta12.jpg",
+      "https://exemplo.com/cartas/carta13.jpg",
+      "https://exemplo.com/cartas/carta14.jpg",
+      "https://exemplo.com/cartas/carta15.jpg",
+      "https://exemplo.com/cartas/carta16.jpg"
+    ];
+
+    // sorteia uma aleatória
+    const carta = cartas[Math.floor(Math.random() * cartas.length)];
+
+    // evita cache (pra cada pessoa ver diferente)
+    const img = document.getElementById("carta");
+    img.src = `${carta}?t=${Date.now()}`;
+  </script>
+</body>
+</html>
