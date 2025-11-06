@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Your Card</title>
+  <title>Sua Carta</title>
   <style>
     body {
       background: #fff;
@@ -96,24 +96,24 @@
     <button onclick="setLang('pt')">PT</button>
   </div>
 
-  <h2 id="title">Your card is:</h2>
+  <h2 id="title">Sua carta é:</h2>
 
   <!-- Carta -->
   <div class="card-container" onclick="flipCard()">
     <div class="card" id="card">
       <div class="card-face card-front">
-        <img id="cardFront" src="" alt="Card front">
+        <img id="cardFront" src="" alt="Frente da carta">
       </div>
-      <div class="card-face card-back" id="cardBack">
-        Back of the card
+      <div class="card-face card-back">
+        <img id="cardBack" src="" alt="Verso da carta">
       </div>
     </div>
   </div>
 
-  <button class="reload" onclick="drawCard()">See another</button>
+  <button class="reload" onclick="drawCard()">Ver outra</button>
 
   <script>
-    // ====== SETS DE CARTAS ======
+    // ====== CARTAS EM INGLÊS (FRENTE) ======
     const cartasEN = [
       "https://i.imgur.com/i9CdVGM.png",
       "https://i.imgur.com/AuwpAuB.png",
@@ -133,83 +133,93 @@
       "https://i.imgur.com/Ia0KqxG.png"
     ];
 
-    const cartasES = [
-      "https://i.imgur.com/i9CdVGM.png",
-      "https://i.imgur.com/AuwpAuB.png",
-      "https://i.imgur.com/2ss9UxY.png",
-      "https://i.imgur.com/gYZPbbX.png",
-      "https://i.imgur.com/kFBMtdV.png",
-      "https://i.imgur.com/iDq2g6K.png",
-      "https://i.imgur.com/pVINTL1.png",
-      "https://i.imgur.com/ipavp10.png",
-      "https://i.imgur.com/wmdqo1P.png",
-      "https://i.imgur.com/aZDwcOu.png",
-      "https://i.imgur.com/kpBO8MB.png",
-      "https://i.imgur.com/i2Cn22H.png",
-      "https://i.imgur.com/mEXh5DJ.png",
-      "https://i.imgur.com/zZa5RcU.png",
-      "https://i.imgur.com/Qt7l0Gd.png",
-      "https://i.imgur.com/Ia0KqxG.png"
+    // ====== CARTAS EM ESPANHOL (PLACEHOLDER) ======
+    const cartasES = [...Array(16)].map(() => "https://i.imgur.com/i9CdVGM.png");
+
+    // ====== CARTAS EM PORTUGUÊS ======
+    const cartasFrentePT = [
+      "https://i.imgur.com/ReWHPEu.png",
+      "https://i.imgur.com/TzduRgi.png",
+      "https://i.imgur.com/iSP77vP.png",
+      "https://i.imgur.com/BWX7m7v.png",
+      "https://i.imgur.com/eJ4FSs8.png",
+      "https://i.imgur.com/sTg7br4.png",
+      "https://i.imgur.com/UYUz1Rt.png",
+      "https://i.imgur.com/NDnsdka.png",
+      "https://i.imgur.com/A2dbFIv.png",
+      "https://i.imgur.com/uUWm7q1.png",
+      "https://i.imgur.com/NH3iwhB.png",
+      "https://i.imgur.com/bo4bEmV.png",
+      "https://i.imgur.com/hhWg9V1.png",
+      "https://i.imgur.com/DOsOkiZ.png",
+      "https://i.imgur.com/w0epWaf.png",
+      "https://i.imgur.com/taOS2i1.png"
     ];
 
-    const cartasPT = [
-      "https://i.imgur.com/i9CdVGM.png",
-      "https://i.imgur.com/AuwpAuB.png",
-      "https://i.imgur.com/2ss9UxY.png",
-      "https://i.imgur.com/gYZPbbX.png",
-      "https://i.imgur.com/kFBMtdV.png",
-      "https://i.imgur.com/iDq2g6K.png",
-      "https://i.imgur.com/pVINTL1.png",
-      "https://i.imgur.com/ipavp10.png",
-      "https://i.imgur.com/wmdqo1P.png",
-      "https://i.imgur.com/aZDwcOu.png",
-      "https://i.imgur.com/kpBO8MB.png",
-      "https://i.imgur.com/i2Cn22H.png",
-      "https://i.imgur.com/mEXh5DJ.png",
-      "https://i.imgur.com/zZa5RcU.png",
-      "https://i.imgur.com/Qt7l0Gd.png",
-      "https://i.imgur.com/Ia0KqxG.png"
+    const cartasVersoPT = [
+      "https://i.imgur.com/RwdjLSg.png",
+      "https://i.imgur.com/X2ewBpN.png",
+      "https://i.imgur.com/U2c88R1.png",
+      "https://i.imgur.com/69XxhP5.png",
+      "https://i.imgur.com/QSLHGgX.png",
+      "https://i.imgur.com/p7nYPTg.png",
+      "https://i.imgur.com/oC81NZJ.png",
+      "https://i.imgur.com/L7I7KEG.png",
+      "https://i.imgur.com/eyRL5Jj.png",
+      "https://i.imgur.com/oWvPE0I.png",
+      "https://i.imgur.com/7m7LW41.png",
+      "https://i.imgur.com/1cvLLF5.png",
+      "https://i.imgur.com/84KUbaL.png",
+      "https://i.imgur.com/EMHiEl3.png",
+      "https://i.imgur.com/jhn5wGq.png",
+      "https://i.imgur.com/6eoXQaB.png"
     ];
 
     // ====== TEXTOS ======
     const texts = {
-      en: { title: "Your card is:", back: "Back of the card", button: "See another" },
-      es: { title: "Tu carta es:", back: "Reverso de la carta", button: "Ver otra" },
-      pt: { title: "Sua carta é:", back: "Verso da carta", button: "Ver outra" }
+      en: { title: "Your card is:", button: "See another" },
+      es: { title: "Tu carta es:", button: "Ver otra" },
+      pt: { title: "Sua carta é:", button: "Ver outra" }
     };
 
-    let lang = "en";
+    let lang = "pt"; // idioma padrão agora é português
 
     function setLang(l) {
       lang = l;
       document.getElementById("title").textContent = texts[lang].title;
-      document.getElementById("cardBack").textContent = texts[lang].back;
       document.querySelector(".reload").textContent = texts[lang].button;
-      drawCard(); // troca o baralho quando muda o idioma
+      drawCard(); // atualiza carta ao trocar idioma
     }
 
-    // Escolhe o conjunto de cartas de acordo com o idioma
-    function getDeck() {
+    // ====== ESCOLHER BARALHOS ======
+    function getDeckFront() {
       if (lang === "es") return cartasES;
-      if (lang === "pt") return cartasPT;
+      if (lang === "pt") return cartasFrentePT;
       return cartasEN;
     }
 
-    // Sorteia uma carta
+    function getDeckBack() {
+      if (lang === "pt") return cartasVersoPT;
+      return getDeckFront(); // inglês e espanhol usam a mesma frente como verso
+    }
+
+    // ====== SORTEAR CARTA ======
     function drawCard() {
-      const deck = getDeck();
-      const carta = deck[Math.floor(Math.random() * deck.length)];
-      document.getElementById("cardFront").src = `${carta}?t=${Date.now()}`;
+      const deckFront = getDeckFront();
+      const deckBack = getDeckBack();
+      const index = Math.floor(Math.random() * deckFront.length);
+      document.getElementById("cardFront").src = `${deckFront[index]}?t=${Date.now()}`;
+      document.getElementById("cardBack").src = `${deckBack[index]}?t=${Date.now()}`;
       document.getElementById("card").classList.remove("flipped");
     }
 
-    // Virar carta
+    // ====== VIRAR CARTA ======
     function flipCard() {
       document.getElementById("card").classList.toggle("flipped");
     }
 
-    // Início
-    setLang("en");
+    // ====== INÍCIO: PT COMO PADRÃO ======
+    setLang("pt");
   </script>
 </body>
 </html>
