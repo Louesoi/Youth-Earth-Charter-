@@ -6,16 +6,16 @@
   <title>Cartas da Terra das Juventudes</title>
   <style>
     body {
-      background: #fff;
-      color: #000;
+      margin: 0;
+      font-family: sans-serif;
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
-      font-family: sans-serif;
       flex-direction: column;
       position: relative;
+      background: url('https://i.imgur.com/rzQTB18.png') no-repeat center center/cover;
       overflow: hidden;
     }
 
@@ -25,39 +25,42 @@
       top: 0;
       left: 0;
       height: 100%;
-      width: 280px;
-      background: #fafafa;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+      width: 320px;
+      background: url('https://i.imgur.com/rzQTB18.png') no-repeat center center/cover;
+      filter: invert(1);
       transform: translateX(-100%);
-      transition: transform 0.4s ease;
+      transition: transform 0.5s ease;
       padding: 20px;
       z-index: 20;
       overflow-y: auto;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      color: black;
     }
     .sidebar.open {
       transform: translateX(0);
     }
+
     .sidebar h2 {
-      margin-top: 0;
-      font-size: 1.4rem;
       text-align: center;
+      font-size: 1.4rem;
+      margin-top: 0;
     }
-    .info-card {
+    .sidebar-content {
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 12px;
       padding: 15px;
-      margin-bottom: 20px;
-      color: white;
-      font-size: 0.9rem;
-      line-height: 1.4rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      color: #000;
+      font-size: 0.95rem;
+      line-height: 1.5rem;
     }
-    .info-card:nth-child(2) { background: #e53935; } /* vermelho */
-    .info-card:nth-child(3) { background: #1e88e5; } /* azul */
-    .info-card:nth-child(4) { background: #fbc02d; color: #000; } /* amarelo */
+    .sidebar-content img {
+      width: 100%;
+      border-radius: 12px;
+    }
 
     .sidebar button.close-btn {
-      background: #000;
-      color: #fff;
+      background: white;
+      color: black;
       border: none;
       padding: 5px 10px;
       border-radius: 6px;
@@ -67,22 +70,22 @@
       margin: 10px auto;
     }
 
-    /* Botão "O que somos?" */
+    /* Botão lateral */
     .about-btn {
       position: absolute;
       left: 15px;
       top: 15px;
-      background: #000;
-      color: #fff;
+      background: white;
+      color: black;
       border: none;
-      padding: 8px 12px;
+      padding: 8px 14px;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
       z-index: 15;
     }
 
-    /* ======== RESTANTE ======== */
+    /* ======== CONTROLES DE IDIOMA ======== */
     .lang-switch {
       position: absolute;
       top: 15px;
@@ -90,14 +93,20 @@
       z-index: 10;
     }
     .lang-switch button {
-      background: #000;
-      color: #fff;
+      background: white;
+      color: black;
       border: none;
       margin-left: 5px;
       padding: 5px 10px;
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
+    }
+
+    /* ======== CARTAS ======== */
+    h2#title {
+      color: white;
+      text-shadow: 0 0 5px rgba(0,0,0,0.6);
     }
 
     .card-container {
@@ -113,6 +122,7 @@
       cursor: pointer;
     }
     .card.flipped { transform: rotateY(180deg); }
+
     .card-face {
       position: absolute;
       width: 100%;
@@ -136,8 +146,8 @@
 
     button.reload {
       margin-top: 1rem;
-      background: #000;
-      color: #fff;
+      background: white;
+      color: black;
       border: none;
       padding: 0.5rem 1rem;
       border-radius: 8px;
@@ -150,35 +160,14 @@
 </head>
 <body>
   <!-- Botão lateral -->
-  <button class="about-btn" onclick="toggleSidebar()">O que somos?</button>
+  <button class="about-btn" id="aboutBtn" onclick="toggleSidebar()">O que somos?</button>
 
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
-    <h2>O que somos?</h2>
+    <h2 id="sidebarTitle">O que somos?</h2>
     <button class="close-btn" onclick="toggleSidebar()">Fechar</button>
-
-    <div class="info-card">
-      🇧🇷 <strong>Versão revisada em português</strong><br><br>
-      As Cartas da Terra das Juventudes nasceram como um processo coletivo e simbólico de recriação da Carta da Terra, 25 anos depois de sua versão original. Jovens de diversas regiões do Brasil e do mundo se reuniram em 2025 para refletir sobre os princípios diante da crise climática, das desigualdades e dos modos de vida atuais.<br><br>
-      O resultado é este baralho jovem da Carta da Terra, que traduz os 16 princípios em quatro eixos:<br><br>
-      <em>Afeto e comunidade<br>Território<br>Resistência e justiça<br>Futuro e imaginação</em><br><br>
-      Ferramenta educativa e artística, ele expressa a potência das juventudes na busca por formas de vida mais dignas, solidárias e sustentáveis. Una-se a nós no compromisso pela defesa da vida em todas as suas formas!
-    </div>
-
-    <div class="info-card">
-      🇪🇸 <strong>Traducción al español</strong><br><br>
-      Las Cartas de la Tierra de las Juventudes nacieron como un proceso colectivo y simbólico de recreación de la Carta de la Tierra, 25 años después de su versión original. Jóvenes de diversas regiones de Brasil y del mundo se reunieron en 2025 para reflexionar sobre los principios frente a la crisis climática, las desigualdades y los modos de vida actuales.<br><br>
-      El resultado es esta baraja juvenil de la Carta de la Tierra, que traduce los 16 principios en cuatro ejes:<br><br>
-      <em>Afecto y comunidad<br>Territorio<br>Resistencia y justicia<br>Futuro e imaginación</em><br><br>
-      Herramienta educativa y artística, expresa la potencia de las juventudes en la búsqueda de formas de vida más dignas, solidarias y sostenibles. ¡Únete a nosotros en el compromiso por la defensa de la vida en todas sus formas!
-    </div>
-
-    <div class="info-card">
-      🇬🇧 <strong>English translation</strong><br><br>
-      The Earth Charter of Youth Cards were born as a collective and symbolic process of re-creating the Earth Charter, 25 years after its original version. Young people from different regions of Brazil and around the world came together in 2025 to reflect on its principles in the face of the climate crisis, inequalities, and current ways of life.<br><br>
-      The result is this youth deck of the Earth Charter, which translates the 16 principles into four themes:<br><br>
-      <em>Affection and community<br>Territory<br>Resistance and justice<br>Future and imagination</em><br><br>
-      An educational and artistic tool, it expresses the power of youth in the search for more dignified, supportive, and sustainable ways of life. Join us in the commitment to defend life in all its forms!
+    <div class="sidebar-content" id="sidebarContent">
+      <img src="https://i.imgur.com/4Up7UyX.png" alt="Carta explicativa">
     </div>
   </div>
 
@@ -239,83 +228,3 @@
       "https://i.imgur.com/ReWHPEu.png",
       "https://i.imgur.com/TzduRgi.png",
       "https://i.imgur.com/iSP77vP.png",
-      "https://i.imgur.com/BWX7m7v.png",
-      "https://i.imgur.com/eJ4FSs8.png",
-      "https://i.imgur.com/sTg7br4.png",
-      "https://i.imgur.com/UYUz1Rt.png",
-      "https://i.imgur.com/NDnsdka.png",
-      "https://i.imgur.com/A2dbFIv.png",
-      "https://i.imgur.com/uUWm7q1.png",
-      "https://i.imgur.com/NH3iwhB.png",
-      "https://i.imgur.com/bo4bEmV.png",
-      "https://i.imgur.com/hhWg9V1.png",
-      "https://i.imgur.com/DOsOkiZ.png",
-      "https://i.imgur.com/w0epWaf.png",
-      "https://i.imgur.com/taOS2i1.png"
-    ];
-
-    const cartasVersoPT = [
-      "https://i.imgur.com/RwdjLSg.png",
-      "https://i.imgur.com/X2ewBpN.png",
-      "https://i.imgur.com/U2c88R1.png",
-      "https://i.imgur.com/69XxhP5.png",
-      "https://i.imgur.com/QSLHGgX.png",
-      "https://i.imgur.com/p7nYPTg.png",
-      "https://i.imgur.com/oC81NZJ.png",
-      "https://i.imgur.com/L7I7KEG.png",
-      "https://i.imgur.com/eyRL5Jj.png",
-      "https://i.imgur.com/oWvPE0I.png",
-      "https://i.imgur.com/7m7LW41.png",
-      "https://i.imgur.com/1cvLLF5.png",
-      "https://i.imgur.com/84KUbaL.png",
-      "https://i.imgur.com/EMHiEl3.png",
-      "https://i.imgur.com/jhn5wGq.png",
-      "https://i.imgur.com/6eoXQaB.png"
-    ];
-
-    // Versos padrão EN/ES
-    const versoPadrao = "https://i.imgur.com/rzQTB18.png";
-
-    const texts = {
-      en: { title: "Your card is:", button: "See another" },
-      es: { title: "Tu carta es:", button: "Ver otra" },
-      pt: { title: "Sua carta é:", button: "Ver outra" }
-    };
-
-    let lang = "pt";
-
-    function setLang(l) {
-      lang = l;
-      document.getElementById("title").textContent = texts[lang].title;
-      document.querySelector(".reload").textContent = texts[lang].button;
-      drawCard();
-    }
-
-    function getDeckFront() {
-      if (lang === "es") return cartasES;
-      if (lang === "pt") return cartasFrentePT;
-      return cartasEN;
-    }
-
-    function getDeckBack() {
-      if (lang === "pt") return cartasVersoPT;
-      return Array(16).fill(versoPadrao);
-    }
-
-    function drawCard() {
-      const deckFront = getDeckFront();
-      const deckBack = getDeckBack();
-      const index = Math.floor(Math.random() * deckFront.length);
-      document.getElementById("cardFront").src = `${deckFront[index]}?t=${Date.now()}`;
-      document.getElementById("cardBack").src = `${deckBack[index]}?t=${Date.now()}`;
-      document.getElementById("card").classList.remove("flipped");
-    }
-
-    function flipCard() {
-      document.getElementById("card").classList.toggle("flipped");
-    }
-
-    setLang("pt");
-  </script>
-</body>
-</html>
