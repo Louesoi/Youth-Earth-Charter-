@@ -8,93 +8,25 @@
     body {
       margin: 0;
       font-family: sans-serif;
-      color: white;
+      background: white;
+      color: black;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       flex-direction: column;
-      position: relative;
-      background: url('https://i.imgur.com/rzQTB18.png') no-repeat center center/cover;
-      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      transition: background 0.5s, color 0.5s;
     }
 
-    /* ======== MENU LATERAL ======== */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 320px;
-      background: url('https://i.imgur.com/rzQTB18.png') no-repeat center center/cover;
-      filter: invert(1);
-      transform: translateX(-100%);
-      transition: transform 0.5s ease;
-      padding: 20px;
-      z-index: 20;
-      overflow-y: auto;
-      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
-      color: black;
-    }
-    .sidebar.open {
-      transform: translateX(0);
-    }
-
-    .sidebar h2 {
-      text-align: center;
-      font-size: 1.4rem;
-      margin-top: 0;
-    }
-    .sidebar-content {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 12px;
-      padding: 15px;
-      color: #000;
-      font-size: 0.95rem;
-      line-height: 1.5rem;
-    }
-    .sidebar-content img {
-      width: 100%;
-      border-radius: 12px;
-    }
-
-    .sidebar button.close-btn {
-      background: white;
-      color: black;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      display: block;
-      margin: 10px auto;
-    }
-
-    /* Botão lateral */
-    .about-btn {
-      position: absolute;
-      left: 15px;
-      top: 15px;
-      background: white;
-      color: black;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 15;
-    }
-
-    /* ======== CONTROLES DE IDIOMA ======== */
+    /* Botões de idioma */
     .lang-switch {
       position: absolute;
       top: 15px;
       right: 15px;
-      z-index: 10;
     }
     .lang-switch button {
-      background: white;
-      color: black;
+      background: black;
+      color: white;
       border: none;
       margin-left: 5px;
       padding: 5px 10px;
@@ -103,15 +35,23 @@
       font-weight: bold;
     }
 
-    /* ======== CARTAS ======== */
-    h2#title {
+    /* Botão lateral / superior */
+    .about-btn {
+      position: absolute;
+      left: 15px;
+      top: 15px;
+      background: black;
       color: white;
-      text-shadow: 0 0 5px rgba(0,0,0,0.6);
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
+    /* Carta */
     .card-container {
       perspective: 1000px;
-      z-index: 1;
     }
     .card {
       width: 300px;
@@ -122,7 +62,6 @@
       cursor: pointer;
     }
     .card.flipped { transform: rotateY(180deg); }
-
     .card-face {
       position: absolute;
       width: 100%;
@@ -136,7 +75,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
     .card-back {
       transform: rotateY(180deg);
@@ -144,32 +82,48 @@
       box-shadow: none;
     }
 
+    /* Botão ver outra */
     button.reload {
       margin-top: 1rem;
-      background: white;
-      color: black;
+      background: black;
+      color: white;
       border: none;
       padding: 0.5rem 1rem;
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
-      z-index: 5;
-      position: relative;
     }
+
+    /* Modo "sobre nós" */
+    .about-mode {
+      background: black;
+      color: white;
+    }
+
+    .about-content {
+      display: none;
+      text-align: center;
+      width: 80%;
+      max-width: 500px;
+    }
+
+    .about-content img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    }
+
+    .about-content p {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <!-- Botão lateral -->
-  <button class="about-btn" id="aboutBtn" onclick="toggleSidebar()">O que somos?</button>
-
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <h2 id="sidebarTitle">O que somos?</h2>
-    <button class="close-btn" onclick="toggleSidebar()">Fechar</button>
-    <div class="sidebar-content" id="sidebarContent">
-      <img src="https://i.imgur.com/4Up7UyX.png" alt="Carta explicativa">
-    </div>
-  </div>
+  <!-- Botão "Sobre nós" -->
+  <button class="about-btn" id="aboutBtn" onclick="toggleAbout()">Sobre nós</button>
 
   <!-- Botões de idioma -->
   <div class="lang-switch">
@@ -178,10 +132,11 @@
     <button onclick="setLang('pt')">PT</button>
   </div>
 
+  <!-- Título -->
   <h2 id="title">Sua carta é:</h2>
 
-  <!-- Carta -->
-  <div class="card-container" onclick="flipCard()">
+  <!-- Carta aleatória -->
+  <div class="card-container" id="cardSection" onclick="flipCard()">
     <div class="card" id="card">
       <div class="card-face card-front">
         <img id="cardFront" src="" alt="Frente da carta">
@@ -192,127 +147,57 @@
     </div>
   </div>
 
-  <button class="reload" onclick="drawCard()">Ver outra</button>
+  <button class="reload" id="reloadBtn" onclick="drawCard()">Ver outra</button>
+
+  <!-- Conteúdo "sobre nós" -->
+  <div class="about-content" id="aboutContent"></div>
 
   <script>
-    // ===== MENU LATERAL =====
-    function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
-    }
-
-    // ===== CARTAS EM INGLÊS =====
+    // ===== CARTAS =====
     const cartasEN = [
-      "https://i.imgur.com/i9CdVGM.png",
-      "https://i.imgur.com/AuwpAuB.png",
-      "https://i.imgur.com/2ss9UxY.png",
-      "https://i.imgur.com/gYZPbbX.png",
-      "https://i.imgur.com/kFBMtdV.png",
-      "https://i.imgur.com/iDq2g6K.png",
-      "https://i.imgur.com/pVINTL1.png",
-      "https://i.imgur.com/ipavp10.png",
-      "https://i.imgur.com/wmdqo1P.png",
-      "https://i.imgur.com/aZDwcOu.png",
-      "https://i.imgur.com/kpBO8MB.png",
-      "https://i.imgur.com/i2Cn22H.png",
-      "https://i.imgur.com/mEXh5DJ.png",
-      "https://i.imgur.com/zZa5RcU.png",
-      "https://i.imgur.com/Qt7l0Gd.png",
-      "https://i.imgur.com/Ia0KqxG.png"
+      "https://i.imgur.com/i9CdVGM.png", "https://i.imgur.com/AuwpAuB.png",
+      "https://i.imgur.com/2ss9UxY.png", "https://i.imgur.com/gYZPbbX.png",
+      "https://i.imgur.com/kFBMtdV.png", "https://i.imgur.com/iDq2g6K.png",
+      "https://i.imgur.com/pVINTL1.png", "https://i.imgur.com/ipavp10.png",
+      "https://i.imgur.com/wmdqo1P.png", "https://i.imgur.com/aZDwcOu.png",
+      "https://i.imgur.com/kpBO8MB.png", "https://i.imgur.com/i2Cn22H.png",
+      "https://i.imgur.com/mEXh5DJ.png", "https://i.imgur.com/zZa5RcU.png",
+      "https://i.imgur.com/Qt7l0Gd.png", "https://i.imgur.com/Ia0KqxG.png"
     ];
 
-    // ===== CARTAS EM ESPANHOL =====
     const cartasES = [...Array(16)].map(() => "https://i.imgur.com/i9CdVGM.png");
 
-    // ===== CARTAS EM PORTUGUÊS =====
     const cartasFrentePT = [
-      "https://i.imgur.com/ReWHPEu.png",
-      "https://i.imgur.com/TzduRgi.png",
-      "https://i.imgur.com/iSP77vP.png",
-      "https://i.imgur.com/BWX7m7v.png",
-      "https://i.imgur.com/eJ4FSs8.png",
-      "https://i.imgur.com/sTg7br4.png",
-      "https://i.imgur.com/UYUz1Rt.png",
-      "https://i.imgur.com/NDnsdka.png",
-      "https://i.imgur.com/A2dbFIv.png",
-      "https://i.imgur.com/uUWm7q1.png",
-      "https://i.imgur.com/NH3iwhB.png",
-      "https://i.imgur.com/bo4bEmV.png",
-      "https://i.imgur.com/hhWg9V1.png",
-      "https://i.imgur.com/DOsOkiZ.png",
-      "https://i.imgur.com/w0epWaf.png",
-      "https://i.imgur.com/taOS2i1.png"
+      "https://i.imgur.com/ReWHPEu.png", "https://i.imgur.com/TzduRgi.png",
+      "https://i.imgur.com/iSP77vP.png", "https://i.imgur.com/BWX7m7v.png",
+      "https://i.imgur.com/eJ4FSs8.png", "https://i.imgur.com/sTg7br4.png",
+      "https://i.imgur.com/UYUz1Rt.png", "https://i.imgur.com/NDnsdka.png",
+      "https://i.imgur.com/A2dbFIv.png", "https://i.imgur.com/uUWm7q1.png",
+      "https://i.imgur.com/NH3iwhB.png", "https://i.imgur.com/bo4bEmV.png",
+      "https://i.imgur.com/hhWg9V1.png", "https://i.imgur.com/DOsOkiZ.png",
+      "https://i.imgur.com/w0epWaf.png", "https://i.imgur.com/taOS2i1.png"
     ];
 
     const cartasVersoPT = [
-      "https://i.imgur.com/RwdjLSg.png",
-      "https://i.imgur.com/X2ewBpN.png",
-      "https://i.imgur.com/U2c88R1.png",
-      "https://i.imgur.com/69XxhP5.png",
-      "https://i.imgur.com/QSLHGgX.png",
-      "https://i.imgur.com/p7nYPTg.png",
-      "https://i.imgur.com/oC81NZJ.png",
-      "https://i.imgur.com/L7I7KEG.png",
-      "https://i.imgur.com/eyRL5Jj.png",
-      "https://i.imgur.com/oWvPE0I.png",
-      "https://i.imgur.com/7m7LW41.png",
-      "https://i.imgur.com/1cvLLF5.png",
-      "https://i.imgur.com/84KUbaL.png",
-      "https://i.imgur.com/EMHiEl3.png",
-      "https://i.imgur.com/jhn5wGq.png",
-      "https://i.imgur.com/6eoXQaB.png"
+      "https://i.imgur.com/RwdjLSg.png", "https://i.imgur.com/X2ewBpN.png",
+      "https://i.imgur.com/U2c88R1.png", "https://i.imgur.com/69XxhP5.png",
+      "https://i.imgur.com/QSLHGgX.png", "https://i.imgur.com/p7nYPTg.png",
+      "https://i.imgur.com/oC81NZJ.png", "https://i.imgur.com/L7I7KEG.png",
+      "https://i.imgur.com/eyRL5Jj.png", "https://i.imgur.com/oWvPE0I.png",
+      "https://i.imgur.com/7m7LW41.png", "https://i.imgur.com/1cvLLF5.png",
+      "https://i.imgur.com/84KUbaL.png", "https://i.imgur.com/EMHiEl3.png",
+      "https://i.imgur.com/jhn5wGq.png", "https://i.imgur.com/6eoXQaB.png"
     ];
 
     const versoPadrao = "https://i.imgur.com/rzQTB18.png";
 
+    // ===== TEXTOS =====
     const texts = {
-      en: { title: "Your card is:", button: "See another", about: "What are we?" },
-      es: { title: "Tu carta es:", button: "Ver otra", about: "¿Qué somos?" },
-      pt: { title: "Sua carta é:", button: "Ver outra", about: "O que somos?" }
+      en: { title: "Your card is:", button: "See another", about: "About us", back: "Your card" },
+      es: { title: "Tu carta es:", button: "Ver otra", about: "Sobre nosotros?", back: "Tu carta" },
+      pt: { title: "Sua carta é:", button: "Ver outra", about: "Sobre nós", back: "Sua carta" }
     };
 
     const aboutTexts = {
       pt: `<img src="https://i.imgur.com/4Up7UyX.png" alt="Carta explicativa">`,
-      en: `<p>The Earth Charter of Youth Cards were born as a collective and symbolic process of re-creating the Earth Charter, 25 years after its original version. Young people from different regions of Brazil and around the world came together in 2025 to reflect on its principles in the face of the climate crisis, inequalities, and current ways of life.<br><br>The result is this youth deck of the Earth Charter, which translates the 16 principles into four themes:<br><br><em>Affection and community<br>Territory<br>Resistance and justice<br>Future and imagination</em><br><br>An educational and artistic tool, it expresses the power of youth in the search for more dignified, supportive, and sustainable ways of life. Join us in the commitment to defend life in all its forms!</p>`,
-      es: `<p>¡Las Cartas de la Tierra de las Juventudes nacieron como un proceso colectivo y simbólico de recreación de la Carta de la Tierra, 25 años después de su versión original! Jóvenes de diversas regiones de Brasil y del mundo se reunieron en 2025 para reflexionar sobre los principios frente a la crisis climática, las desigualdades y los modos de vida actuales.<br><br>El resultado es esta baraja juvenil de la Carta de la Tierra, que traduce los 16 principios en cuatro ejes:<br><br><em>Afecto y comunidad<br>Territorio<br>Resistencia y justicia<br>Futuro e imaginación</em><br><br>Herramienta educativa y artística, expresa la potencia de las juventudes en la búsqueda de formas de vida más dignas, solidarias y sostenibles. ¡Únete a nosotros en el compromiso por la defensa de la vida en todas sus formas!</p>`
-    };
-
-    let lang = "pt";
-
-    function setLang(l) {
-      lang = l;
-      document.getElementById("title").textContent = texts[lang].title;
-      document.querySelector(".reload").textContent = texts[lang].button;
-      document.getElementById("aboutBtn").textContent = texts[lang].about;
-      document.getElementById("sidebarTitle").textContent = texts[lang].about;
-      document.getElementById("sidebarContent").innerHTML = aboutTexts[lang];
-      drawCard();
-    }
-
-    function getDeckFront() {
-      if (lang === "es") return cartasES;
-      if (lang === "pt") return cartasFrentePT;
-      return cartasEN;
-    }
-
-    function getDeckBack() {
-      if (lang === "pt") return cartasVersoPT;
-      return Array(16).fill(versoPadrao);
-    }
-
-    function drawCard() {
-      const deckFront = getDeckFront();
-      const deckBack = getDeckBack();
-      const index = Math.floor(Math.random() * deckFront.length);
-      document.getElementById("cardFront").src = `${deckFront[index]}?t=${Date.now()}`;
-      document.getElementById("cardBack").src = `${deckBack[index]}?t=${Date.now()}`;
-      document.getElementById("card").classList.remove("flipped");
-    }
-
-    function flipCard() {
-      document.getElementById("card").classList.toggle("flipped");
-    }
-
-    setLang("pt");
-  </script>
-</body>
-</html>
+      en: `<p>The Earth Charter of Youth Cards were born as a collective and symbolic process of re-creating the Earth Charter, 25 years after its original version. Young people from different regions of Brazil and around the world came together in 2025 to reflect on its principles in the face of the climate crisis, inequalities, and cur
