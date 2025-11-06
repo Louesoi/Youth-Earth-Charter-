@@ -35,7 +35,7 @@
       font-weight: bold;
     }
 
-    /* Botão lateral / superior */
+    /* Botão lateral */
     .about-btn {
       position: absolute;
       left: 15px;
@@ -47,9 +47,10 @@
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
+      z-index: 10;
     }
 
-    /* Carta */
+    /* Cartas */
     .card-container {
       perspective: 1000px;
     }
@@ -102,27 +103,48 @@
 
     .about-content {
       display: none;
-      text-align: center;
-      width: 80%;
-      max-width: 500px;
-    }
-
-    .about-content img {
-      width: 100%;
+      position: relative;
+      width: 300px;
+      height: 420px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
     }
 
-    .about-content p {
-      font-size: 1rem;
-      line-height: 1.5rem;
+    .about-card-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .about-text {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      line-height: 1.3rem;
+      color: white;
+      overflow-y: auto;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .about-text em {
+      display: block;
+      margin-top: 10px;
+      font-style: italic;
     }
 
     .hidden { display: none; }
   </style>
 </head>
 <body>
-  <!-- Botão "Sobre nós" -->
+  <!-- Botão lateral -->
   <button class="about-btn" id="aboutBtn" onclick="toggleAbout()">Sobre nós</button>
 
   <!-- Botões de idioma -->
@@ -198,26 +220,44 @@
       pt: { title: "Sua carta é:", button: "Ver outra", about: "Sobre nós", back: "Sua carta" }
     };
 
-    const aboutTexts = {
+    const aboutCards = {
       pt: `<img src="https://i.imgur.com/4Up7UyX.png" alt="Carta explicativa">`,
-      en: `<p>The Earth Charter of Youth Cards were born as a collective and symbolic process of re-creating the Earth Charter, 25 years after its original version. Young people from different regions of Brazil and around the world came together in 2025 to reflect on its principles in the face of the climate crisis, inequalities, and current ways of life.<br><br>The result is this youth deck of the Earth Charter, which translates the 16 principles into four themes:<br><br><em>Affection and community<br>Territory<br>Resistance and justice<br>Future and imagination</em><br><br>An educational and artistic tool, it expresses the power of youth in the search for more dignified, supportive, and sustainable ways of life. Join us in the commitment to defend life in all its forms!</p>`,
-      es: `<p>¡Las Cartas de la Tierra de las Juventudes nacieron como un proceso colectivo y simbólico de recreación de la Carta de la Tierra, 25 años después de su versión original! Jóvenes de diversas regiones de Brasil y del mundo se reunieron en 2025 para reflexionar sobre los principios frente a la crisis climática, las desigualdades y los modos de vida actuales.<br><br>El resultado es esta baraja juvenil de la Carta de la Tierra, que traduce los 16 principios en cuatro ejes:<br><br><em>Afecto y comunidad<br>Territorio<br>Resistencia y justicia<br>Futuro e imaginación</em><br><br>Herramienta educativa y artística, expresa la potencia de las juventudes en la búsqueda de formas de vida más dignas, solidarias y sostenibles. ¡Únete a nosotros en el compromiso por la defensa de la vida en todas sus formas!</p>`
+      en: `
+        <img class="about-card-bg" src="https://i.imgur.com/rzQTB18.png" alt="Fundo carta">
+        <div class="about-text">
+          The Earth Charter of Youth Cards were born as a collective and symbolic process of re-creating the Earth Charter, 25 years after its original version. 
+          Young people from different regions of Brazil and around the world came together in 2025 to reflect on its principles in the face of the climate crisis, 
+          inequalities, and current ways of life.<br><br>
+          The result is this youth deck of the Earth Charter, which translates the 16 principles into four themes:<br><br>
+          <em>Affection and community<br>Territory<br>Resistance and justice<br>Future and imagination</em><br><br>
+          An educational and artistic tool, it expresses the power of youth in the search for more dignified, supportive, 
+          and sustainable ways of life. Join us in the commitment to defend life in all its forms!
+        </div>`,
+      es: `
+        <img class="about-card-bg" src="https://i.imgur.com/rzQTB18.png" alt="Fundo carta">
+        <div class="about-text">
+          ¡Las Cartas de la Tierra de las Juventudes nacieron como un proceso colectivo y simbólico de recreación de la Carta de la Tierra, 25 años después de su versión original! 
+          Jóvenes de diversas regiones de Brasil y del mundo se reunieron en 2025 para reflexionar sobre los principios frente a la crisis climática, 
+          las desigualdades y los modos de vida actuales.<br><br>
+          El resultado es esta baraja juvenil de la Carta de la Tierra, que traduce los 16 principios en cuatro ejes:<br><br>
+          <em>Afecto y comunidad<br>Territorio<br>Resistencia y justicia<br>Futuro e imaginación</em><br><br>
+          Herramienta educativa y artística, expresa la potencia de las juventudes en la búsqueda de formas de vida más dignas, solidarias y sostenibles. 
+          ¡Únete a nosotros en el compromiso por la defensa de la vida en todas sus formas!
+        </div>`
     };
 
     let lang = "pt";
     let aboutMode = false;
 
-    // ===== Troca de idioma =====
     function setLang(l) {
       lang = l;
       document.getElementById("title").textContent = texts[lang].title;
       document.querySelector(".reload").textContent = texts[lang].button;
       document.getElementById("aboutBtn").textContent = texts[lang].about;
-      document.getElementById("aboutContent").innerHTML = aboutTexts[lang];
+      document.getElementById("aboutContent").innerHTML = aboutCards[lang];
       drawCard();
     }
 
-    // ===== Cartas =====
     function getDeckFront() {
       if (lang === "es") return cartasES;
       if (lang === "pt") return cartasFrentePT;
@@ -242,7 +282,6 @@
       document.getElementById("card").classList.toggle("flipped");
     }
 
-    // ===== Modo "Sobre nós" =====
     function toggleAbout() {
       aboutMode = !aboutMode;
       const body = document.body;
@@ -253,7 +292,6 @@
       const aboutContent = document.getElementById("aboutContent");
 
       if (aboutMode) {
-        // Entrar no modo sobre nós
         body.classList.add("about-mode");
         title.classList.add("hidden");
         cardSection.classList.add("hidden");
@@ -261,7 +299,6 @@
         aboutContent.style.display = "block";
         aboutBtn.textContent = texts[lang].back;
       } else {
-        // Voltar ao modo cartas
         body.classList.remove("about-mode");
         title.classList.remove("hidden");
         cardSection.classList.remove("hidden");
