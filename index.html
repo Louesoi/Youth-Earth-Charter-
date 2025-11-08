@@ -18,7 +18,6 @@
       transition: background 0.5s, color 0.5s;
     }
 
-    /* Botões de idioma */
     .lang-switch {
       position: absolute;
       top: 15px;
@@ -35,7 +34,6 @@
       font-weight: bold;
     }
 
-    /* Botão lateral */
     .about-btn {
       position: absolute;
       left: 15px;
@@ -50,7 +48,6 @@
       z-index: 10;
     }
 
-    /* Cartas */
     .card-container {
       perspective: 1000px;
     }
@@ -83,7 +80,6 @@
       box-shadow: none;
     }
 
-    /* Botão ver outra */
     button.reload {
       margin-top: 1rem;
       background: black;
@@ -95,7 +91,6 @@
       cursor: pointer;
     }
 
-    /* Modo "sobre nós" */
     .about-mode {
       background: black;
       color: white;
@@ -144,20 +139,15 @@
   </style>
 </head>
 <body>
-  <!-- Botão lateral -->
   <button class="about-btn" id="aboutBtn" onclick="toggleAbout()">Sobre nós</button>
 
-  <!-- Botões de idioma -->
   <div class="lang-switch">
     <button onclick="setLang('en')">EN</button>
-    <button onclick="setLang('es')">ES</button>
     <button onclick="setLang('pt')">PT</button>
   </div>
 
-  <!-- Título -->
   <h2 id="title">Sua carta é:</h2>
 
-  <!-- Carta aleatória -->
   <div class="card-container" id="cardSection" onclick="flipCard()">
     <div class="card" id="card">
       <div class="card-face card-front">
@@ -171,11 +161,9 @@
 
   <button class="reload" id="reloadBtn" onclick="drawCard()">Ver outra</button>
 
-  <!-- Conteúdo "sobre nós" -->
   <div class="about-content" id="aboutContent"></div>
 
   <script>
-    // ===== CARTAS =====
     const cartasEN = [
       "https://i.imgur.com/i9CdVGM.png", "https://i.imgur.com/AuwpAuB.png",
       "https://i.imgur.com/2ss9UxY.png", "https://i.imgur.com/gYZPbbX.png",
@@ -186,8 +174,6 @@
       "https://i.imgur.com/mEXh5DJ.png", "https://i.imgur.com/zZa5RcU.png",
       "https://i.imgur.com/Qt7l0Gd.png", "https://i.imgur.com/Ia0KqxG.png"
     ];
-
-    const cartasES = [...Array(16)].map(() => "https://i.imgur.com/i9CdVGM.png");
 
     const cartasFrentePT = [
       "https://i.imgur.com/ReWHPEu.png", "https://i.imgur.com/TzduRgi.png",
@@ -213,119 +199,19 @@
 
     const versoPadrao = "https://i.imgur.com/rzQTB18.png";
 
-    // ===== TEXTOS =====
     const texts = {
       en: { title: "Your card is:", button: "See another", about: "About us", back: "Your card" },
-      es: { title: "Tu carta es:", button: "Ver otra", about: "Sobre nosotros?", back: "Tu carta" },
       pt: { title: "Sua carta é:", button: "Ver outra", about: "Sobre nós", back: "Sua carta" }
     };
 
     const aboutCards = {
       pt: `
-    <img class="about-card-bg" src="https://i.imgur.com/rzQTB18.png" alt="Fundo carta">
-    <div class="about-text">
-      As Cartas da Terra das Juventudes nasceram como um processo coletivo e simbólico de recriação da Carta da Terra, 
-      25 anos depois de sua versão original. Jovens de diversas regiões do Brasil e do mundo se reuniram em 2025 para 
-      refletir sobre os princípios diante da crise climática, das desigualdades e dos modos de vida atuais.<br><br>
-
-      O resultado é este baralho jovem da Carta da Terra, que traduz os 16 princípios em quatro eixos:<br><br>
-
-      <em>Afeto e comunidade<br>
-      Território<br>
-      Resistência e justiça<br>
-      Futuro e imaginação</em><br><br>
-
-      Ferramenta educativa e artística, ele expressa a potência das juventudes na busca por formas de vida mais dignas, 
-      solidárias e sustentáveis. Una-se a nós no compromisso pela defesa da vida em todas as suas formas!
-    </div>
-  `,
-      en: `
         <img class="about-card-bg" src="https://i.imgur.com/rzQTB18.png" alt="Fundo carta">
         <div class="about-text">
-          The Earth Charter of Youth Cards were born as a collective and symbolic process of re-creating the Earth Charter, 25 years after its original version. 
-          Young people from different regions of Brazil and around the world came together in 2025 to reflect on its principles in the face of the climate crisis, 
-          inequalities, and current ways of life.<br><br>
-          The result is this youth deck of the Earth Charter, which translates the 16 principles into four themes:<br><br>
-          <em>Affection and community<br>Territory<br>Resistance and justice<br>Future and imagination</em><br><br>
-          An educational and artistic tool, it expresses the power of youth in the search for more dignified, supportive, 
-          and sustainable ways of life. Join us in the commitment to defend life in all its forms!
-        </div>`,
-      es: `
-        <img class="about-card-bg" src="https://i.imgur.com/rzQTB18.png" alt="Fundo carta">
-        <div class="about-text">
-          ¡Las Cartas de la Tierra de las Juventudes nacieron como un proceso colectivo y simbólico de recreación de la Carta de la Tierra, 25 años después de su versión original! 
-          Jóvenes de diversas regiones de Brasil y del mundo se reunieron en 2025 para reflexionar sobre los principios frente a la crisis climática, 
-          las desigualdades y los modos de vida actuales.<br><br>
-          El resultado es esta baraja juvenil de la Carta de la Tierra, que traduce los 16 principios en cuatro ejes:<br><br>
-          <em>Afecto y comunidad<br>Territorio<br>Resistencia y justicia<br>Futuro e imaginación</em><br><br>
-          Herramienta educativa y artística, expresa la potencia de las juventudes en la búsqueda de formas de vida más dignas, solidarias y sostenibles. 
-          ¡Únete a nosotros en el compromiso por la defensa de la vida en todas sus formas!
-        </div>`
-    };
-
-    let lang = "pt";
-    let aboutMode = false;
-
-    function setLang(l) {
-      lang = l;
-      document.getElementById("title").textContent = texts[lang].title;
-      document.querySelector(".reload").textContent = texts[lang].button;
-      document.getElementById("aboutBtn").textContent = texts[lang].about;
-      document.getElementById("aboutContent").innerHTML = aboutCards[lang];
-      drawCard();
-    }
-
-    function getDeckFront() {
-      if (lang === "es") return cartasES;
-      if (lang === "pt") return cartasFrentePT;
-      return cartasEN;
-    }
-
-    function getDeckBack() {
-      if (lang === "pt") return cartasVersoPT;
-      return Array(16).fill(versoPadrao);
-    }
-
-    function drawCard() {
-      const deckFront = getDeckFront();
-      const deckBack = getDeckBack();
-      const index = Math.floor(Math.random() * deckFront.length);
-      document.getElementById("cardFront").src = deckFront[index];
-      document.getElementById("cardBack").src = deckBack[index];
-      document.getElementById("card").classList.remove("flipped");
-    }
-
-    function flipCard() {
-      document.getElementById("card").classList.toggle("flipped");
-    }
-
-    function toggleAbout() {
-      aboutMode = !aboutMode;
-      const body = document.body;
-      const title = document.getElementById("title");
-      const cardSection = document.getElementById("cardSection");
-      const reloadBtn = document.getElementById("reloadBtn");
-      const aboutBtn = document.getElementById("aboutBtn");
-      const aboutContent = document.getElementById("aboutContent");
-
-      if (aboutMode) {
-        body.classList.add("about-mode");
-        title.classList.add("hidden");
-        cardSection.classList.add("hidden");
-        reloadBtn.classList.add("hidden");
-        aboutContent.style.display = "block";
-        aboutBtn.textContent = texts[lang].back;
-      } else {
-        body.classList.remove("about-mode");
-        title.classList.remove("hidden");
-        cardSection.classList.remove("hidden");
-        reloadBtn.classList.remove("hidden");
-        aboutContent.style.display = "none";
-        aboutBtn.textContent = texts[lang].about;
-      }
-    }
-
-    setLang("pt");
-  </script>
-</body>
-</html>
+          As Cartas da Terra das Juventudes nasceram como um processo coletivo e simbólico de recriação da Carta da Terra, 
+          25 anos depois de sua versão original. Jovens de diversas regiões do Brasil e do mundo se reuniram em 2025 para 
+          refletir sobre os princípios diante da crise climática, das desigualdades e dos modos de vida atuais.<br><br>
+          O resultado é este baralho jovem da Carta da Terra, que traduz os 16 princípios em quatro eixos:<br><br>
+          <em>Afeto e comunidade<br>
+          Território<br>
+          Resistência e justiça<b
