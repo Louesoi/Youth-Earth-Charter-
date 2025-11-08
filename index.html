@@ -214,4 +214,87 @@
           O resultado é este baralho jovem da Carta da Terra, que traduz os 16 princípios em quatro eixos:<br><br>
           <em>Afeto e comunidade<br>
           Território<br>
-          Resistência e justiça<b
+          Resistência e justiça<br>
+          Futuro e imaginação</em><br><br>
+          Ferramenta educativa e artística, ele expressa a potência das juventudes na busca por formas de vida mais dignas, 
+          solidárias e sustentáveis. Una-se a nós no compromisso pela defesa da vida em todas as suas formas!
+        </div>
+      `,
+      en: `
+        <img class="about-card-bg" src="https://i.imgur.com/rzQTB18.png" alt="Fundo carta">
+        <div class="about-text">
+          The Earth Charter of Youth Cards were born as a collective and symbolic process of re-creating the Earth Charter, 25 years after its original version. 
+          Young people from different regions of Brazil and around the world came together in 2025 to reflect on its principles in the face of the climate crisis, 
+          inequalities, and current ways of life.<br><br>
+          The result is this youth deck of the Earth Charter, which translates the 16 principles into four themes:<br><br>
+          <em>Affection and community<br>Territory<br>Resistance and justice<br>Future and imagination</em><br><br>
+          An educational and artistic tool, it expresses the power of youth in the search for more dignified, supportive, 
+          and sustainable ways of life. Join us in the commitment to defend life in all its forms!
+        </div>`
+    };
+
+    let lang = "pt";
+    let aboutMode = false;
+
+    function setLang(l) {
+      lang = l;
+      document.getElementById("title").textContent = texts[lang].title;
+      document.querySelector(".reload").textContent = texts[lang].button;
+      document.getElementById("aboutBtn").textContent = texts[lang].about;
+      document.getElementById("aboutContent").innerHTML = aboutCards[lang];
+      drawCard();
+    }
+
+    function getDeckFront() {
+      if (lang === "pt") return cartasFrentePT;
+      return cartasEN;
+    }
+
+    function getDeckBack() {
+      if (lang === "pt") return cartasVersoPT;
+      return Array(16).fill(versoPadrao);
+    }
+
+    function drawCard() {
+      const deckFront = getDeckFront();
+      const deckBack = getDeckBack();
+      const index = Math.floor(Math.random() * deckFront.length);
+      document.getElementById("cardFront").src = deckFront[index];
+      document.getElementById("cardBack").src = deckBack[index];
+      document.getElementById("card").classList.remove("flipped");
+    }
+
+    function flipCard() {
+      document.getElementById("card").classList.toggle("flipped");
+    }
+
+    function toggleAbout() {
+      aboutMode = !aboutMode;
+      const body = document.body;
+      const title = document.getElementById("title");
+      const cardSection = document.getElementById("cardSection");
+      const reloadBtn = document.getElementById("reloadBtn");
+      const aboutBtn = document.getElementById("aboutBtn");
+      const aboutContent = document.getElementById("aboutContent");
+
+      if (aboutMode) {
+        body.classList.add("about-mode");
+        title.classList.add("hidden");
+        cardSection.classList.add("hidden");
+        reloadBtn.classList.add("hidden");
+        aboutContent.style.display = "block";
+        aboutBtn.textContent = texts[lang].back;
+      } else {
+        body.classList.remove("about-mode");
+        title.classList.remove("hidden");
+        cardSection.classList.remove("hidden");
+        reloadBtn.classList.remove("hidden");
+        aboutContent.style.display = "none";
+        aboutBtn.textContent = texts[lang].about;
+      }
+    }
+
+    setLang("pt");
+  </script>
+</body>
+</html>
